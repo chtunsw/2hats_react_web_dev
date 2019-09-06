@@ -6,12 +6,7 @@ import TableRow from "@material-ui/core/TableRow";
 import TableCell from "@material-ui/core/TableCell";
 import TableFooter from "@material-ui/core/TableFooter";
 import TablePagination from "@material-ui/core/TablePagination";
-import {
-  screen,
-  OpenSansNormal,
-  DarkGrey,
-  NormalBlack
-} from "../assets/js/variables";
+import { OpenSansNormal, DarkGrey, NormalBlack } from "../assets/js/variables";
 import { diet } from "../assets/js/mockDiet";
 
 import { connect } from "react-redux";
