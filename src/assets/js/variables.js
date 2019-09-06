@@ -8,7 +8,7 @@ export const NormalBlack = "#3f3f3f";
 
 // Media queries for devices
 export const screen = {
-  small: `(max-width: 650px)` // tablet vertical
+  small: `(max-width: 820px)` // tablet vertical
 };
 
 // Fonts

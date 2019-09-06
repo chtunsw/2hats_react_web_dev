@@ -23,8 +23,12 @@ const Wrapper = styled.div`
   background: ${PassionPurple};
   .container {
     margin: 0 auto;
-    padding: 25px 10px 0;
+    padding: 25px 15px 0;
     width: 50%;
+    @media ${screen.small} {
+      width: auto;
+      margin: 0;
+    }
     .search-input {
       display: flex;
       align-items: center;
@@ -66,7 +70,7 @@ const Wrapper = styled.div`
           height: 60px;
         }
         span {
-          padding-left: 10px;
+          padding-left: 20px;
           font-family: ${OpenSansBold};
           color: white;
         }

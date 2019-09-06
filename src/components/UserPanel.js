@@ -6,7 +6,6 @@ import {
   OpenSansNormal,
   LightPurple,
   PassionPurple,
-  DarkPurple,
   LightGrey,
   DarkGrey,
   NormalBlack
@@ -30,20 +29,23 @@ const {
 
 const Wrapper = styled.div`
   width: 300px;
-  padding: 20px;
+  padding: 15px;
   background: ${LightGrey};
+  @media ${screen.small} {
+    width: 100%;
+  }
   .date-selector {
     display: none;
     align-items: center;
     justify-content: space-between;
-    font-size: 2rem;
+    font-size: 1.5rem;
     font-family: ${OpenSansBold};
     color: ${NormalBlack};
     @media ${screen.small} {
       display: flex;
     }
     .arrow-icon {
-      font-size: 3rem;
+      font-size: 2rem;
       color: ${PassionPurple};
     }
   }
@@ -95,8 +97,7 @@ const Wrapper = styled.div`
     .first-box {
       span {
         font-family: ${OpenSansNormal};
-        font-size: 1.1rem;
-        line-height: 1.5;
+        font-size: 1rem;
         color: ${NormalBlack};
       }
       p {

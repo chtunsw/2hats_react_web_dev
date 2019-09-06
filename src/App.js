@@ -12,7 +12,6 @@ const Wrapper = styled.div`
   flex-wrap: wrap;
   max-width: 1000px;
   margin: 0 auto;
-  background: azure;
   overflow: hidden;
 `;
 
