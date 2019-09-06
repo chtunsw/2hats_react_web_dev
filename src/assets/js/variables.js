@@ -1,15 +1,14 @@
 // Colors
+export const LightPurple = "#d2c0eb";
 export const PassionPurple = "#6200ee";
-export const NormalGrey = "#c7c7c7";
+export const DarkPurple = "#300076";
 export const LightGrey = "#f5f5f5";
 export const DarkGrey = "#7a7a7a";
+export const NormalBlack = "#3f3f3f";
 
 // Media queries for devices
 export const screen = {
-  xSmall: `(max-width: 413px)`, // larger phones
-  small: `(max-width: 650px)`, // tablet vertical
-  medium: `(max-width: 1160px)`, // tablet horizontal
-  large: `(max-width: 1278px)` // laptop and regular size desktop
+  small: `(max-width: 650px)` // tablet vertical
 };
 
 // Fonts

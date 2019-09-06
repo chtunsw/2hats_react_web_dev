@@ -22,10 +22,10 @@
 export let diet = {
   first_name: "Jane",
   last_name: "Appleseed",
-  potrait:
-    "https://www.google.com/url?sa=i&source=images&cd=&cad=rja&uact=8&ved=2ahUKEwiv6_q2s7nkAhXCbX0KHW9WBVMQjRx6BAgBEAQ&url=%2Furl%3Fsa%3Di%26source%3Dimages%26cd%3D%26ved%3D%26url%3Dhttps%253A%252F%252Fwww.schaffertstudio.com%252Fonline-scheduling%252F967885%26psig%3DAOvVaw1cYxh1i_SG2knped8R7eRQ%26ust%3D1567763157579292&psig=AOvVaw1cYxh1i_SG2knped8R7eRQ&ust=1567763157579292",
-  height_cm: 57,
-  weight_kg: 163,
+  portrait:
+    "https://www.schaffertstudio.com/media/pages/14713-white__eden_g__7517__allsts__yearbook.jpg",
+  height_cm: 163,
+  weight_kg: 57,
   daily_goal: 1500,
   data_points: [
     {
