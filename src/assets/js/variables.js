@@ -13,9 +13,6 @@ export const screen = {
 };
 
 // Fonts
-export const OpenSansLight =
-  "font-family: OpenSans, sans-serif; font-weight: 300;";
-export const OpenSansNormal =
-  "font-family: OpenSans, sans-serif; font-weight: 400;";
-export const OpenSansBold =
-  "font-family: OpenSans, sans-serif; font-weight: 700;";
+export const OpenSansLight = "OpenSans, sans-serif; font-weight: 300;";
+export const OpenSansNormal = "OpenSans, sans-serif; font-weight: 400;";
+export const OpenSansBold = "OpenSans, sans-serif; font-weight: 700;";

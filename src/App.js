@@ -10,6 +10,7 @@ const Wrapper = styled.div`
   max-width: 1400px;
   margin: 0 auto;
   background: azure;
+  overflow: hidden;
 `;
 
 function App() {
