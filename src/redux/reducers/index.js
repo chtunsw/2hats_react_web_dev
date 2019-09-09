@@ -1,6 +1,7 @@
 import { combineReducers } from "redux";
-import plan from "./plan";
-
+import diet from "./diet";
+import date from "./date";
 export default combineReducers({
-  plan
+  diet,
+  date
 });

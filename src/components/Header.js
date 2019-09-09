@@ -16,6 +16,9 @@ import SearchIcon from "@material-ui/icons/Search";
 import ArrowLeft from "@material-ui/icons/KeyboardArrowLeft";
 import ArrowRight from "@material-ui/icons/KeyboardArrowRight";
 
+import { connect } from "react-redux";
+import { changeDateIndex } from "../redux/actions";
+
 const { first_name, portrait, height_cm, weight_kg } = diet;
 
 const Wrapper = styled.div`
@@ -104,24 +107,64 @@ const Wrapper = styled.div`
   }
 `;
 
-const Header = () => {
+const Header = props => {
+  const { changeDateIndex, currentDateIndex } = props;
+
+  // get date string from dateIndex
+  const getDateFromIndex = index => {
+    let date = undefined;
+    switch (index) {
+      case 0:
+        date = "Today";
+        break;
+      case 1:
+        date = "Yesterday";
+        break;
+      case 2:
+        const dateStringArray = new Date().toDateString().split(" ");
+        date = dateStringArray[2] + " " + dateStringArray[1];
+        break;
+      default:
+    }
+    return date;
+  };
+
+  // update dateIndex in redux store
+  const updateDateIndex = action => {
+    const newDateIndex = currentDateIndex + action;
+    if (newDateIndex > 2) {
+      changeDateIndex(0);
+    } else if (newDateIndex < 0) {
+      changeDateIndex(2);
+    } else {
+      changeDateIndex(newDateIndex);
+    }
+  };
+
   return (
     <Wrapper>
       <div className="container">
         <Paper className="search-input">
           <SearchIcon className="search-icon" />
           <InputBase
+            id="search-input"
             fullWidth={true}
             placeholder="Search Google Maps"
             inputProps={{ "aria-label": "search google maps" }}
           />
         </Paper>
         <div className="date-selector">
-          <IconButton className="arrow-icon">
+          <IconButton
+            className="arrow-icon"
+            onClick={() => updateDateIndex(+1)}
+          >
             <ArrowLeft fontSize="inherit" />
           </IconButton>
-          {"Today"}
-          <IconButton className="arrow-icon">
+          {getDateFromIndex(currentDateIndex)}
+          <IconButton
+            className="arrow-icon"
+            onClick={() => updateDateIndex(-1)}
+          >
             <ArrowRight fontSize="inherit" />
           </IconButton>
         </div>
@@ -144,4 +187,9 @@ const Header = () => {
   );
 };
 
-export default Header;
+const mapStateToProps = state => ({ currentDateIndex: state.date.dateIndex });
+
+export default connect(
+  mapStateToProps,
+  { changeDateIndex }
+)(Header);

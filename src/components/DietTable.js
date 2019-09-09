@@ -7,15 +7,12 @@ import TableCell from "@material-ui/core/TableCell";
 import TableFooter from "@material-ui/core/TableFooter";
 import TablePagination from "@material-ui/core/TablePagination";
 import { OpenSansNormal, DarkGrey, NormalBlack } from "../assets/js/variables";
-import { diet } from "../assets/js/mockDiet";
 
 import { connect } from "react-redux";
-import { changePlan } from "../redux/actions/index";
-
-const mockList = diet.data_points[1].intake_list;
 
 const Wrapper = styled.div`
-  flex-grow: 1;
+  flex: 1;
+  min-height: 440px;
   padding: 20px 0;
   background-color: white;
   .food-icon {
@@ -51,6 +48,9 @@ const Wrapper = styled.div`
 `;
 
 const DietTable = props => {
+  const { currentDateIndex, currentDiet } = props;
+
+  // update table page
   const [page, setPage] = useState(0);
   const rowsPerPage = 5;
   const onChangePage = (event, newPage) => {
@@ -60,7 +60,7 @@ const DietTable = props => {
     <Wrapper>
       <Table size="small">
         <TableBody>
-          {mockList
+          {currentDiet[currentDateIndex].intake_list
             .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
             .map((item, index) => (
               <TableRow key={index}>
@@ -88,7 +88,7 @@ const DietTable = props => {
               rowsPerPage={rowsPerPage}
               page={page}
               onChangePage={onChangePage}
-              count={mockList.length}
+              count={currentDiet[currentDateIndex].intake_list.length}
             />
           </TableRow>
         </TableFooter>
@@ -98,10 +98,10 @@ const DietTable = props => {
 };
 
 const mapStateToProps = state => {
-  return { plan: state.plan };
+  return {
+    currentDateIndex: state.date.dateIndex,
+    currentDiet: state.diet.dietList
+  };
 };
 
-export default connect(
-  mapStateToProps,
-  { changePlan }
-)(DietTable);
+export default connect(mapStateToProps)(DietTable);
