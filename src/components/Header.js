@@ -1,15 +1,19 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import {
   screen,
   OpenSansBold,
   OpenSansNormal,
   PassionPurple,
-  DarkPurple
+  DarkPurple,
+  DarkGrey
 } from "../assets/js/variables";
 import { diet } from "../assets/js/mockDiet";
 import Paper from "@material-ui/core/Paper";
 import InputBase from "@material-ui/core/InputBase";
+import Popper from "@material-ui/core/Popper";
+import Menu from "@material-ui/core/Menu";
+import MenuItem from "@material-ui/core/MenuItem";
 import IconButton from "@material-ui/core/IconButton";
 import Avatar from "@material-ui/core/Avatar";
 import SearchIcon from "@material-ui/icons/Search";
@@ -18,6 +22,7 @@ import ArrowRight from "@material-ui/icons/KeyboardArrowRight";
 
 import { connect } from "react-redux";
 import { changeDateIndex } from "../redux/actions";
+import { Divider } from "@material-ui/core";
 
 const { first_name, portrait, height_cm, weight_kg } = diet;
 
@@ -32,13 +37,25 @@ const Wrapper = styled.div`
       width: auto;
       margin: 0;
     }
-    .search-input {
+    .search-input-paper {
+      position: relative;
+      height: 40px;
       display: flex;
       align-items: center;
       justify-content: flex-start;
       .search-icon {
-        font-size: 2rem;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 30px;
+        height: 30px;
         padding: 5px;
+        color: ${DarkGrey};
+      }
+      .search-input {
+        input {
+          padding-left: 40px;
+        }
       }
     }
     .date-selector {
@@ -110,6 +127,18 @@ const Wrapper = styled.div`
 const Header = props => {
   const { changeDateIndex, currentDateIndex } = props;
 
+  // store and update search input value
+  const [inputValue, setInputValue] = useState("");
+  const [inputRef, setInputRef] = useState();
+
+  const updateInputValue = e => {
+    setInputValue(e.target.value);
+  };
+
+  const createInputRef = input => {
+    input && setInputRef(input);
+  };
+
   // get date string from dateIndex
   const getDateFromIndex = index => {
     let date = undefined;
@@ -144,15 +173,41 @@ const Header = props => {
   return (
     <Wrapper>
       <div className="container">
-        <Paper className="search-input">
+        <Paper className="search-input-paper">
           <SearchIcon className="search-icon" />
           <InputBase
             id="search-input"
+            className="search-input"
+            inputRef={createInputRef}
             fullWidth={true}
-            placeholder="Search Google Maps"
+            value={inputValue}
+            onChange={updateInputValue}
+            placeholder="Search foods..."
             inputProps={{ "aria-label": "search google maps" }}
           />
         </Paper>
+        <Popper
+          open={inputValue !== ""}
+          autoFocus={false}
+          variant="menu"
+          anchorEl={inputRef}
+        >
+          <Paper
+            style={{
+              marginTop: 8,
+              width: inputRef ? inputRef.clientWidth : undefined
+            }}
+          >
+            <MenuItem>asda</MenuItem>
+            <Divider></Divider>
+            <MenuItem>asda</MenuItem>
+            <Divider></Divider>
+            <MenuItem>asda</MenuItem>
+            <Divider></Divider>
+            <MenuItem>asda</MenuItem>
+            <Divider></Divider>
+          </Paper>
+        </Popper>
         <div className="date-selector">
           <IconButton
             className="arrow-icon"
