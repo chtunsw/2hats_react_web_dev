@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import {
   screen,
@@ -129,6 +129,7 @@ const Header = props => {
   // store and update search input value
   const [inputValue, setInputValue] = useState("");
   const [inputRef, setInputRef] = useState();
+  const [isInputActive, setIsInputActive] = useState(false);
 
   const updateInputValue = e => {
     setInputValue(e.target.value);
@@ -137,6 +138,18 @@ const Header = props => {
   const createInputRef = input => {
     input && setInputRef(input);
   };
+
+  // track window active element id
+  useEffect(() => {
+    const clickEventRef = window.addEventListener("click", e => {
+      if (document.activeElement.id === "search-input") {
+        setIsInputActive(true);
+      } else {
+        setIsInputActive(false);
+      }
+    });
+    return () => window.removeEventListener("click", clickEventRef);
+  }, []);
 
   // get date string from dateIndex
   const getDateFromIndex = index => {
@@ -186,7 +199,7 @@ const Header = props => {
           />
         </Paper>
         <Popper
-          open={inputValue !== ""}
+          open={isInputActive && inputValue !== ""}
           autoFocus={false}
           variant="menu"
           anchorEl={inputRef}
