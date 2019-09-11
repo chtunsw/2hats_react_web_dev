@@ -214,7 +214,7 @@ const AutoList = props => {
   };
 
   // create mealType state
-  const [mealType, setMealType] = useState("Breakfast");
+  const [mealType, setMealType] = useState("breakfast");
 
   const updateMealType = e => {
     setMealType(e.target.value);
@@ -361,10 +361,10 @@ const AutoList = props => {
               onChange={updateMealType}
               value={mealType}
             >
-              <MenuItem value="Breakfast">Breakfast</MenuItem>
-              <MenuItem value="Lunch">Lunch</MenuItem>
-              <MenuItem value="Dinner">Dinner</MenuItem>
-              <MenuItem value="Snack">Snack</MenuItem>
+              <MenuItem value="breakfast">Breakfast</MenuItem>
+              <MenuItem value="lunch">Lunch</MenuItem>
+              <MenuItem value="dinner">Dinner</MenuItem>
+              <MenuItem value="snack">Snack</MenuItem>
             </Select>
             <Button
               onClick={addFoodToDiet}
