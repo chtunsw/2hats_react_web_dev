@@ -2,11 +2,9 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import axios from "axios";
 import {
-  screen,
   OpenSansBold,
   OpenSansNormal,
   PassionPurple,
-  DarkPurple,
   LightGrey,
   DarkGrey,
   NormalBlack
@@ -20,14 +18,8 @@ import {
 import Popper from "@material-ui/core/Popper";
 import MenuItem from "@material-ui/core/MenuItem";
 import Paper from "@material-ui/core/Paper";
-import {
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogActions,
-  DialogContentText
-} from "@material-ui/core";
-import { FormControl, Select, TextField } from "@material-ui/core";
+import { Dialog } from "@material-ui/core";
+import { Select, TextField } from "@material-ui/core";
 import IconButton from "@material-ui/core/IconButton";
 import CloseIcon from "@material-ui/icons/Close";
 import Button from "@material-ui/core/Button";
@@ -230,7 +222,7 @@ const AutoList = props => {
 
   // add food to diet
   const addFoodToDiet = () => {
-    let newTodayList = [...currentDietList[0].intake_list];
+    let newTodayList = currentDietList[0].intake_list;
     newTodayList.push({
       food_name: foodDetail.food_name,
       meal_type: mealType,
@@ -248,13 +240,9 @@ const AutoList = props => {
     });
     let newDietList = [...currentDietList];
     newDietList[0].intake_list = [...newTodayList];
+    changeDietList(newDietList);
     setDialogSwitch(false);
   };
-
-  // auto list redux test
-  useEffect(() => console.log("auto list redux test", currentDietList), [
-    currentDietList
-  ]);
 
   return (
     <>

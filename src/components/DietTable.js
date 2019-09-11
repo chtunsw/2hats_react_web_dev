@@ -57,11 +57,6 @@ const DietTable = props => {
     setPage(newPage);
   };
 
-  // diet table redux test
-  useEffect(() => console.log("diet table test", currentDietList), [
-    currentDietList
-  ]);
-
   return (
     <Wrapper>
       <Table size="small">
