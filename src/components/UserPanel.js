@@ -229,6 +229,11 @@ const UserPanel = props => {
     setCalorieObj(newCalorieObj);
   }, [currentDateIndex, currentDietList]);
 
+  // user panel redux test
+  useEffect(() => console.log("user panel redux test", currentDietList), [
+    currentDietList
+  ]);
+
   return (
     <Wrapper>
       <div className="date-selector">

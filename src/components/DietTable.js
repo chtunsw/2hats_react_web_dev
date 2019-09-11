@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
@@ -48,7 +48,7 @@ const Wrapper = styled.div`
 `;
 
 const DietTable = props => {
-  const { currentDateIndex, currentDiet } = props;
+  const { currentDateIndex, currentDietList } = props;
 
   // update table page
   const [page, setPage] = useState(0);
@@ -56,11 +56,17 @@ const DietTable = props => {
   const onChangePage = (event, newPage) => {
     setPage(newPage);
   };
+
+  // diet table redux test
+  useEffect(() => console.log("diet table test", currentDietList), [
+    currentDietList
+  ]);
+
   return (
     <Wrapper>
       <Table size="small">
         <TableBody>
-          {currentDiet[currentDateIndex].intake_list
+          {currentDietList[currentDateIndex].intake_list
             .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
             .map((item, index) => (
               <TableRow key={index}>
@@ -70,7 +76,7 @@ const DietTable = props => {
                 <TableCell>
                   <span className="cell-top">{item.food_name}</span>
                   <p className="cell-bottom">
-                    {item.serving_size} {item.serving_unit}s (
+                    {item.serving_qty} {item.serving_unit}s (
                     {item.serving_weight_grams} g)
                   </p>
                 </TableCell>
@@ -88,7 +94,7 @@ const DietTable = props => {
               rowsPerPage={rowsPerPage}
               page={page}
               onChangePage={onChangePage}
-              count={currentDiet[currentDateIndex].intake_list.length}
+              count={currentDietList[currentDateIndex].intake_list.length}
             />
           </TableRow>
         </TableFooter>
@@ -100,7 +106,7 @@ const DietTable = props => {
 const mapStateToProps = state => {
   return {
     currentDateIndex: state.date.dateIndex,
-    currentDiet: state.diet.dietList
+    currentDietList: state.diet.dietList
   };
 };
 

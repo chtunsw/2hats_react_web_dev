@@ -7,6 +7,7 @@ import {
   OpenSansNormal,
   PassionPurple,
   DarkPurple,
+  LightGrey,
   DarkGrey,
   NormalBlack
 } from "../assets/js/variables";
@@ -26,17 +27,15 @@ import {
   DialogActions,
   DialogContentText
 } from "@material-ui/core";
-import {
-  FormControl,
-  FormHelperText,
-  Select,
-  TextField
-} from "@material-ui/core";
+import { FormControl, Select, TextField } from "@material-ui/core";
 import IconButton from "@material-ui/core/IconButton";
 import CloseIcon from "@material-ui/icons/Close";
 import Button from "@material-ui/core/Button";
 import { Typography } from "@material-ui/core";
 import { Divider } from "@material-ui/core";
+
+import { connect } from "react-redux";
+import { changeDietList } from "../redux/actions";
 
 const Wrapper = styled.div`
   max-height: 400px;
@@ -91,13 +90,96 @@ const Wrapper = styled.div`
   }
 `;
 
-const DialogWrapper = styled.div``;
+const DialogWrapper = styled.div`
+  position: relative;
+  padding: 15px;
+  .dialog-title-box {
+    padding-bottom: 15px;
+    .close-button {
+      position: absolute;
+      top: 0px;
+      right: 0px;
+      padding: 15px;
+    }
+    img {
+      width: 80px;
+      height: 80px;
+    }
+    p {
+      display: block;
+      font-family: ${OpenSansNormal};
+      font-size: 2rem;
+      color: ${NormalBlack};
+    }
+  }
+  .dialog-content-box {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 15px 0;
+    .serving-input {
+      width: 50%;
+      margin: 0;
+    }
+    .unit-box {
+      height: 56px;
+      span {
+        font-family: ${OpenSansNormal};
+        font-size: 2rem;
+        color: ${NormalBlack};
+      }
+      p {
+        font-family: ${OpenSansNormal};
+        font-size: 1rem;
+        color: ${DarkGrey};
+      }
+    }
+    .calorie-box {
+      height: 56px;
+      span {
+        font-family: ${OpenSansNormal};
+        font-size: 2rem;
+        color: ${NormalBlack};
+      }
+      p {
+        font-family: ${OpenSansNormal};
+        font-size: 1rem;
+        color: ${DarkGrey};
+      }
+    }
+  }
+  .dialog-actions-box {
+    p {
+      padding: 15px 0;
+      font-family: ${OpenSansNormal};
+      font-size: 1rem;
+      color: ${DarkGrey};
+    }
+    .dialog-select {
+      width: 100%;
+      display: block;
+      border-top-left-radius: 4px;
+      border-top-right-radius: 4px;
+      background-color: rgba(0, 0, 0, 0.09);
+      .MuiSelect-selectMenu {
+        padding: 15px 0 15px 12px;
+      }
+    }
+    .dialog-button {
+      display: block;
+      float: right;
+      margin-top: 15px;
+      color: ${LightGrey};
+      background-color: ${PassionPurple};
+    }
+  }
+`;
 
 const AutoList = props => {
   const { isInputActive, inputValue, inputRef, foodList } = props;
   const commonList = foodList && foodList.common;
   const brandedList = foodList && foodList.branded;
-
+  const { currentDietList, changeDietList } = props;
   // create food detail state
   const [foodDetail, setFoodDetail] = useState();
   useEffect(() => {
@@ -127,6 +209,52 @@ const AutoList = props => {
       console.log(e);
     }
   };
+
+  // close dialog
+  const closeDialog = () => {
+    setDialogSwitch(false);
+  };
+
+  // create serveQty state
+  const [serveQty, setServeQty] = useState(1.0);
+  const updateServeQty = e => {
+    setServeQty(e.target.value);
+  };
+
+  // create mealType state
+  const [mealType, setMealType] = useState("Breakfast");
+
+  const updateMealType = e => {
+    setMealType(e.target.value);
+  };
+
+  // add food to diet
+  const addFoodToDiet = () => {
+    let newTodayList = [...currentDietList[0].intake_list];
+    newTodayList.push({
+      food_name: foodDetail.food_name,
+      meal_type: mealType,
+      nf_calories:
+        foodDetail &&
+        !isNaN(serveQty) &&
+        Number((foodDetail.nf_calories * serveQty).toFixed(2)),
+      serving_qty: serveQty && serveQty,
+      serving_weight_grams:
+        foodDetail &&
+        !isNaN(serveQty) &&
+        Number((foodDetail.serving_weight_grams * serveQty).toFixed(2)),
+      serving_unit: foodDetail.serving_unit,
+      thumb: foodDetail && foodDetail.photo.thumb
+    });
+    let newDietList = [...currentDietList];
+    newDietList[0].intake_list = [...newTodayList];
+    setDialogSwitch(false);
+  };
+
+  // auto list redux test
+  useEffect(() => console.log("auto list redux test", currentDietList), [
+    currentDietList
+  ]);
 
   return (
     <>
@@ -195,51 +323,80 @@ const AutoList = props => {
           </Wrapper>
         </Paper>
       </Popper>
-      <Dialog open={dialogSwitch}>
-        <DialogTitle className="dialog-title-box" id="customized-dialog-title">
-          <IconButton aria-label="close">
-            <CloseIcon />
-          </IconButton>
-          <img src={foodDetail && foodDetail.photo.thumb} alt="food icon" />
-          <span>{foodDetail && foodDetail.food_name}</span>
-        </DialogTitle>
-        <DialogContent className="dialog-content-box" dividers>
-          <TextField
-            id="filled-name"
-            label="Servings"
-            helperText="slice"
-            margin="normal"
-            variant="filled"
-          />
-          <div className="unit-box">
-            <span>28</span>
-            <p>grams</p>
-          </div>
-          <div className="calorie-box">
-            <span>113</span>
-            <p>calories</p>
-          </div>
-        </DialogContent>
-        <DialogActions className="dialog-actions-box">
-          <span>ADD TO TODAY</span>
-          <FormControl variant="filled">
-            <Select
-              inputProps={{
-                name: "age",
-                id: "filled-age-simple"
-              }}
+      <Dialog fullWidth={true} maxWidth="xs" open={dialogSwitch}>
+        <DialogWrapper>
+          <div className="dialog-title-box" id="customized-dialog-title">
+            <IconButton
+              onClick={closeDialog}
+              className="close-button"
+              aria-label="close"
             >
-              <MenuItem value={"Breakfast"}>Breakfast</MenuItem>
-              <MenuItem value={"Lunch"}>Lunch</MenuItem>
-              <MenuItem value={"Dinner"}>Dinner</MenuItem>
-              <MenuItem value={"Snack"}>Snack</MenuItem>
+              <CloseIcon />
+            </IconButton>
+            <img src={foodDetail && foodDetail.photo.thumb} alt="food icon" />
+            <p>{foodDetail && foodDetail.food_name}</p>
+          </div>
+          <Divider />
+          <div className="dialog-content-box">
+            <TextField
+              id="filled-name"
+              label="Servings"
+              helperText={foodDetail && foodDetail.serving_unit}
+              margin="normal"
+              variant="filled"
+              className="serving-input"
+              value={serveQty}
+              onChange={updateServeQty}
+            />
+            <div className="unit-box">
+              <span>
+                {foodDetail &&
+                  !isNaN(serveQty) &&
+                  (foodDetail.serving_weight_grams * serveQty).toFixed(0)}
+              </span>
+              <p>grams</p>
+            </div>
+            <div className="calorie-box">
+              <span>
+                {foodDetail &&
+                  !isNaN(serveQty) &&
+                  (foodDetail.nf_calories * serveQty).toFixed(0)}
+              </span>
+              <p>calories</p>
+            </div>
+          </div>
+          <Divider />
+          <div className="dialog-actions-box">
+            <p>ADD TO TODAY</p>
+            <Select
+              className="dialog-select"
+              onChange={updateMealType}
+              value={mealType}
+            >
+              <MenuItem value="Breakfast">Breakfast</MenuItem>
+              <MenuItem value="Lunch">Lunch</MenuItem>
+              <MenuItem value="Dinner">Dinner</MenuItem>
+              <MenuItem value="Snack">Snack</MenuItem>
             </Select>
-          </FormControl>
-          <Button className="dialog-button">ADD</Button>
-        </DialogActions>
+            <Button
+              onClick={addFoodToDiet}
+              className="dialog-button"
+              size="large"
+            >
+              ADD
+            </Button>
+          </div>
+        </DialogWrapper>
       </Dialog>
     </>
   );
 };
 
-export default AutoList;
+const mapStateToProps = state => ({
+  currentDietList: state.diet.dietList
+});
+
+export default connect(
+  mapStateToProps,
+  { changeDietList }
+)(AutoList);

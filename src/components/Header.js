@@ -159,7 +159,6 @@ const Header = props => {
             }
           });
           setFoodList(promise.data);
-          console.log(promise.data);
         } catch (e) {
           console.log(e);
         }
