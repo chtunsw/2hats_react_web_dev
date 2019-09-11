@@ -8,11 +8,17 @@ import {
   DarkPurple,
   DarkGrey
 } from "../assets/js/variables";
+import {
+  appId,
+  appIdValue,
+  appKey,
+  appKeyValue
+} from "../assets/js/apiAccessToken";
 import { diet } from "../assets/js/mockDiet";
+import axios from "axios";
+import AutoList from "./AutoList";
 import Paper from "@material-ui/core/Paper";
 import InputBase from "@material-ui/core/InputBase";
-import Popper from "@material-ui/core/Popper";
-import MenuItem from "@material-ui/core/MenuItem";
 import IconButton from "@material-ui/core/IconButton";
 import Avatar from "@material-ui/core/Avatar";
 import SearchIcon from "@material-ui/icons/Search";
@@ -21,7 +27,6 @@ import ArrowRight from "@material-ui/icons/KeyboardArrowRight";
 
 import { connect } from "react-redux";
 import { changeDateIndex } from "../redux/actions";
-import { Divider } from "@material-ui/core";
 
 const { first_name, portrait, height_cm, weight_kg } = diet;
 
@@ -139,6 +144,28 @@ const Header = props => {
     input && setInputRef(input);
   };
 
+  // call food api for food list when inputValue changes
+  const [foodList, setFoodList] = useState();
+  useEffect(() => {
+    inputValue !== "" &&
+      (async () => {
+        try {
+          const promise = await axios({
+            method: "get",
+            url: `https://trackapi.nutritionix.com/v2/search/instant?query=${inputValue}`,
+            headers: {
+              [appId]: appIdValue,
+              [appKey]: appKeyValue
+            }
+          });
+          setFoodList(promise.data);
+          console.log(promise.data);
+        } catch (e) {
+          console.log(e);
+        }
+      })();
+  }, [inputValue]);
+
   // track window active element id
   useEffect(() => {
     const clickEventRef = window.addEventListener("click", e => {
@@ -198,28 +225,12 @@ const Header = props => {
             inputProps={{ "aria-label": "search google maps" }}
           />
         </Paper>
-        <Popper
-          open={isInputActive && inputValue !== ""}
-          autoFocus={false}
-          variant="menu"
-          anchorEl={inputRef}
-        >
-          <Paper
-            style={{
-              marginTop: 8,
-              width: inputRef ? inputRef.clientWidth : undefined
-            }}
-          >
-            <MenuItem>asda</MenuItem>
-            <Divider></Divider>
-            <MenuItem>asda</MenuItem>
-            <Divider></Divider>
-            <MenuItem>asda</MenuItem>
-            <Divider></Divider>
-            <MenuItem>asda</MenuItem>
-            <Divider></Divider>
-          </Paper>
-        </Popper>
+        <AutoList
+          isInputActive={isInputActive}
+          inputValue={inputValue}
+          inputRef={inputRef}
+          foodList={foodList}
+        />
         <div className="date-selector">
           <IconButton
             className="arrow-icon"
