@@ -136,10 +136,12 @@ const Header = props => {
   const [inputRef, setInputRef] = useState();
   const [isInputActive, setIsInputActive] = useState(false);
 
+  // update input value
   const updateInputValue = e => {
     setInputValue(e.target.value);
   };
 
+  // create reference for input
   const createInputRef = input => {
     input && setInputRef(input);
   };

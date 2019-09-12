@@ -168,19 +168,29 @@ const DialogWrapper = styled.div`
 `;
 
 const AutoList = props => {
-  const { isInputActive, inputValue, inputRef, foodList } = props;
+  const {
+    isInputActive,
+    inputValue,
+    inputRef,
+    foodList,
+    currentDietList,
+    changeDietList
+  } = props;
+
+  // extract common list and branded list
   const commonList = foodList && foodList.common;
   const brandedList = foodList && foodList.branded;
-  const { currentDietList, changeDietList } = props;
+
   // create food detail state
   const [foodDetail, setFoodDetail] = useState();
   useEffect(() => {
     console.log(foodDetail);
   }, [foodDetail]);
 
-  // create dialog open state
+  // create dialog switch state
   const [dialogSwitch, setDialogSwitch] = useState(false);
 
+  // handle list item click
   const handleItemClick = async foodName => {
     try {
       const promise = await axios({
@@ -209,6 +219,8 @@ const AutoList = props => {
 
   // create serveQty state
   const [serveQty, setServeQty] = useState(1.0);
+
+  // update servimg qty input value
   const updateServeQty = e => {
     setServeQty(e.target.value);
   };
@@ -216,6 +228,7 @@ const AutoList = props => {
   // create mealType state
   const [mealType, setMealType] = useState("breakfast");
 
+  // update meal type select input value
   const updateMealType = e => {
     setMealType(e.target.value);
   };
