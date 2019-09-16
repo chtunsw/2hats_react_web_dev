@@ -348,6 +348,8 @@ const AutoList = props => {
               className="serving-input"
               value={serveQty}
               autoComplete="off"
+              type="number"
+              inputProps={{ min: "0", step: "0.1" }}
               onChange={updateServeQty}
             />
             <div className="unit-box">

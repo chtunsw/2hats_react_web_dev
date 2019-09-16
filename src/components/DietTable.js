@@ -1,11 +1,9 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableRow from "@material-ui/core/TableRow";
 import TableCell from "@material-ui/core/TableCell";
-import TableFooter from "@material-ui/core/TableFooter";
-import TablePagination from "@material-ui/core/TablePagination";
 import { OpenSansNormal, DarkGrey, NormalBlack } from "../assets/js/variables";
 
 import { connect } from "react-redux";
@@ -40,63 +38,38 @@ const Wrapper = styled.div`
   .MuiTablePagination-spacer {
     flex: 0;
   }
-  .table-footer {
-    .MuiTableCell-root {
-      border-bottom: 0;
-    }
-  }
 `;
 
 const DietTable = props => {
   const { currentDateIndex, currentDietList } = props;
 
-  // update table page
-  const [page, setPage] = useState(0);
-  const rowsPerPage = 5;
-  const onChangePage = (event, newPage) => {
-    setPage(newPage);
-  };
-
   return (
     <Wrapper>
       <Table size="small">
         <TableBody>
-          {currentDietList[currentDateIndex].intake_list
-            .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-            .map((item, index) => (
-              <TableRow key={index}>
-                <TableCell>
-                  <img className="food-icon" src={item.thumb} alt="food" />
-                </TableCell>
-                <TableCell>
-                  <span className="cell-top">{item.food_name}</span>
-                  <p className="cell-bottom">
-                    {item.serving_qty} {item.serving_unit}s (
-                    {item.serving_weight_grams &&
-                      item.serving_weight_grams.toFixed(0)}{" "}
-                    g)
-                  </p>
-                </TableCell>
-                <TableCell align="right">
-                  <span className="cell-top">
-                    {item.nf_calories && item.nf_calories.toFixed(0)} cal
-                  </span>
-                  <p className="cell-bottom">{item.meal_type}</p>
-                </TableCell>
-              </TableRow>
-            ))}
+          {currentDietList[currentDateIndex].intake_list.map((item, index) => (
+            <TableRow key={index}>
+              <TableCell>
+                <img className="food-icon" src={item.thumb} alt="food" />
+              </TableCell>
+              <TableCell>
+                <span className="cell-top">{item.food_name}</span>
+                <p className="cell-bottom">
+                  {item.serving_qty} {item.serving_unit}s (
+                  {item.serving_weight_grams &&
+                    item.serving_weight_grams.toFixed(0)}{" "}
+                  g)
+                </p>
+              </TableCell>
+              <TableCell align="right">
+                <span className="cell-top">
+                  {item.nf_calories && item.nf_calories.toFixed(0)} cal
+                </span>
+                <p className="cell-bottom">{item.meal_type}</p>
+              </TableCell>
+            </TableRow>
+          ))}
         </TableBody>
-        <TableFooter className="table-footer">
-          <TableRow>
-            <TablePagination
-              rowsPerPageOptions={[]}
-              rowsPerPage={rowsPerPage}
-              page={page}
-              onChangePage={onChangePage}
-              count={currentDietList[currentDateIndex].intake_list.length}
-            />
-          </TableRow>
-        </TableFooter>
       </Table>
     </Wrapper>
   );
