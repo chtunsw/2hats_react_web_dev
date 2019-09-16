@@ -15,7 +15,6 @@ import {
   appKey,
   appKeyValue
 } from "../assets/js/apiAccessToken";
-import Popper from "@material-ui/core/Popper";
 import MenuItem from "@material-ui/core/MenuItem";
 import Paper from "@material-ui/core/Paper";
 import { Dialog } from "@material-ui/core";
@@ -30,53 +29,58 @@ import { connect } from "react-redux";
 import { changeDietList } from "../redux/actions";
 
 const Wrapper = styled.div`
-  max-height: 400px;
-  overflow-y: scroll;
-  .divider-tag {
-    padding-top: 16px;
-    padding-left: 16px;
-    padding-bottom: 6px;
-    font-size: 1rem;
-    font-family: ${OpenSansBold};
-    color: ${DarkGrey};
-  }
-  .menu-item {
-    padding: 10px 16px;
-    .image-container {
-      width: 45px;
-      height: 45px;
-      img {
-        width: 100%;
+  z-index: 10;
+  position: absolute;
+  top: 70px;
+  .paper {
+    max-height: 400px;
+    overflow-y: scroll;
+    .divider-tag {
+      padding-top: 16px;
+      padding-left: 16px;
+      padding-bottom: 6px;
+      font-size: 1rem;
+      font-family: ${OpenSansBold};
+      color: ${DarkGrey};
+    }
+    .menu-item {
+      padding: 10px 16px;
+      .image-container {
+        width: 45px;
+        height: 45px;
+        img {
+          width: 100%;
+          height: 100%;
+        }
+      }
+      .common-title-container {
+        max-width: 50%;
+        overflow: hidden;
+        padding-left: 16px;
+        .first-title {
+          font-family: ${OpenSansNormal};
+          font-size: 1.1rem;
+          line-height: 1.5;
+          color: ${NormalBlack};
+        }
+      }
+      .branded-title-container {
+        max-width: 50%;
+        overflow: hidden;
+        padding-left: 16px;
         height: 100%;
-      }
-    }
-    .common-title-container {
-      max-width: 50%;
-      overflow: hidden;
-      padding-left: 16px;
-      .first-title {
-        font-family: ${OpenSansNormal};
-        font-size: 1.1rem;
-        line-height: 1.5;
-        color: ${NormalBlack};
-      }
-    }
-    .branded-title-container {
-      max-width: 50%;
-      overflow: hidden;
-      padding-left: 16px;
-      height: 100%;
-      .first-title {
-        font-family: ${OpenSansNormal};
-        font-size: 1.1rem;
-        line-height: 1.5;
-        color: ${NormalBlack};
-      }
-      .second-title {
-        font-family: ${OpenSansNormal};
-        font-size: 1.1rem;
-        line-height: 1.5;
-        color: ${DarkGrey};
+        .first-title {
+          font-family: ${OpenSansNormal};
+          font-size: 1.1rem;
+          line-height: 1.5;
+          color: ${NormalBlack};
+        }
+        .second-title {
+          font-family: ${OpenSansNormal};
+          font-size: 1.1rem;
+          line-height: 1.5;
+          color: ${DarkGrey};
+        }
       }
     }
   }
@@ -259,19 +263,14 @@ const AutoList = props => {
 
   return (
     <>
-      <Popper
-        open={isInputActive && inputValue !== ""}
-        autoFocus={false}
-        variant="menu"
-        anchorEl={inputRef}
-      >
-        <Paper
-          style={{
-            marginTop: 8,
-            width: inputRef ? inputRef.clientWidth : undefined
-          }}
-        >
-          <Wrapper>
+      {isInputActive && inputValue !== "" && (
+        <Wrapper>
+          <Paper
+            className="paper"
+            style={{
+              width: inputRef ? inputRef.clientWidth : undefined
+            }}
+          >
             {commonList && commonList.length !== 0 && (
               <>
                 <div className="divider-tag">COMMON</div>
@@ -321,9 +320,9 @@ const AutoList = props => {
                 ))}
               </>
             )}
-          </Wrapper>
-        </Paper>
-      </Popper>
+          </Paper>
+        </Wrapper>
+      )}
       <Dialog fullWidth={true} maxWidth="xs" open={dialogSwitch}>
         <DialogWrapper>
           <div className="dialog-title-box" id="customized-dialog-title">
