@@ -28,7 +28,7 @@ import { Divider } from "@material-ui/core";
 import { connect } from "react-redux";
 import { changeDietList } from "../redux/actions";
 
-const Wrapper = styled.div`
+const AutoListWrapper = styled.div`
   z-index: 10;
   position: absolute;
   top: 70px;
@@ -264,7 +264,7 @@ const AutoList = props => {
   return (
     <>
       {isInputActive && inputValue !== "" && (
-        <Wrapper>
+        <AutoListWrapper>
           <Paper
             className="paper"
             style={{
@@ -321,7 +321,7 @@ const AutoList = props => {
               </>
             )}
           </Paper>
-        </Wrapper>
+        </AutoListWrapper>
       )}
       <Dialog fullWidth={true} maxWidth="xs" open={dialogSwitch}>
         <DialogWrapper>
