@@ -6,7 +6,7 @@ import { PassionPurple, DarkPurple } from "../assets/js/variables";
 import * as Scroll from "react-scroll";
 
 const Wrapper = styled.div`
-  position: absolute;
+  position: fixed;
   bottom: 20px;
   right: 20px;
   .fab {

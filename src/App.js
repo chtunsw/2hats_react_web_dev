@@ -9,18 +9,25 @@ import AddButton from "./components/AddButton";
 const Wrapper = styled.div`
   position: relative;
   display: flex;
-  flex-wrap: wrap;
-  max-width: 1000px;
+  flex-direction: column;
+  height: 100vh;
   margin: 0 auto;
-  overflow: hidden;
+  overflow-y: scroll;
+  .container {
+    flex: 1;
+    display: flex;
+    flex-wrap: wrap;
+  }
 `;
 
 function App() {
   return (
     <Wrapper>
       <Header />
-      <UserPanel />
-      <DietTable />
+      <div className="container">
+        <UserPanel />
+        <DietTable />
+      </div>
       <AddButton />
     </Wrapper>
   );

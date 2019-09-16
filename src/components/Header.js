@@ -32,8 +32,13 @@ const { first_name, portrait, height_cm, weight_kg } = diet;
 
 const Wrapper = styled.div`
   width: 100%;
+  height: 165px;
   background: ${PassionPurple};
   .container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     margin: 0 auto;
     padding: 25px 15px 0;
     width: 50%;
@@ -43,6 +48,7 @@ const Wrapper = styled.div`
     }
     .search-input-paper {
       position: relative;
+      width: 100%;
       height: 40px;
       display: flex;
       align-items: center;
@@ -66,6 +72,7 @@ const Wrapper = styled.div`
       display: flex;
       align-items: center;
       justify-content: space-between;
+      width: 100%;
       font-size: 2rem;
       font-family: ${OpenSansBold};
       color: white;
@@ -81,6 +88,7 @@ const Wrapper = styled.div`
       display: none;
       justify-content: space-between;
       align-items: center;
+      width: 100%;
       padding: 20px 0;
       @media ${screen.small} {
         display: flex;
