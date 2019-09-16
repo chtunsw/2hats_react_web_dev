@@ -347,6 +347,7 @@ const AutoList = props => {
               variant="filled"
               className="serving-input"
               value={serveQty}
+              autoComplete="off"
               onChange={updateServeQty}
             />
             <div className="unit-box">

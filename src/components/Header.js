@@ -221,6 +221,7 @@ const Header = props => {
             inputRef={createInputRef}
             fullWidth={true}
             value={inputValue}
+            autoComplete="off"
             onChange={updateInputValue}
             placeholder="Search foods..."
             inputProps={{ "aria-label": "search google maps" }}

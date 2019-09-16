@@ -257,7 +257,9 @@ const UserPanel = props => {
       <Divider orientation="horizontal" />
       <div className="calorie-container">
         <div className="first-box">
-          <span>{calorieObj.consumed} cal</span>
+          <span>
+            {calorieObj.consumed && calorieObj.consumed.toFixed(0)} cal
+          </span>
           <p>consumed</p>
         </div>
         <div className="second-box">
@@ -267,27 +269,33 @@ const UserPanel = props => {
       </div>
       <LinearProgress
         className="progress-bar"
-        value={(calorieObj.consumed / daily_goal) * 100}
+        value={
+          calorieObj.consumed > daily_goal
+            ? 100
+            : (calorieObj.consumed / daily_goal) * 100
+        }
         variant="determinate"
       />
       <div className="progress-percentage">
-        {((calorieObj.consumed / daily_goal) * 100).toFixed(1)} %
+        {calorieObj.consumed &&
+          ((calorieObj.consumed / daily_goal) * 100).toFixed(0)}{" "}
+        %
       </div>
       <div className="meal-container">
         <div className="text-box">
-          <span>{calorieObj.breakfast}</span>
+          <span>{calorieObj.breakfast && calorieObj.breakfast.toFixed(0)}</span>
           <p>Breakfast</p>
         </div>
         <div className="text-box">
-          <span>{calorieObj.lunch}</span>
+          <span>{calorieObj.lunch && calorieObj.lunch.toFixed(0)}</span>
           <p>Lunch</p>
         </div>
         <div className="text-box">
-          <span>{calorieObj.dinner}</span>
+          <span>{calorieObj.dinner && calorieObj.dinner.toFixed(0)}</span>
           <p>Dinner</p>
         </div>
         <div className="text-box">
-          <span>{calorieObj.snack}</span>
+          <span>{calorieObj.snack && calorieObj.snack.toFixed(0)}</span>
           <p>Snack</p>
         </div>
       </div>

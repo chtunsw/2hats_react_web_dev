@@ -72,11 +72,15 @@ const DietTable = props => {
                   <span className="cell-top">{item.food_name}</span>
                   <p className="cell-bottom">
                     {item.serving_qty} {item.serving_unit}s (
-                    {item.serving_weight_grams} g)
+                    {item.serving_weight_grams &&
+                      item.serving_weight_grams.toFixed(0)}{" "}
+                    g)
                   </p>
                 </TableCell>
                 <TableCell align="right">
-                  <span className="cell-top">{item.nf_calories} cal</span>
+                  <span className="cell-top">
+                    {item.nf_calories && item.nf_calories.toFixed(0)} cal
+                  </span>
                   <p className="cell-bottom">{item.meal_type}</p>
                 </TableCell>
               </TableRow>
