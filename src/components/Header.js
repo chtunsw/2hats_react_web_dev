@@ -16,7 +16,7 @@ import {
 } from "../assets/js/apiAccessToken";
 import { diet } from "../assets/js/mockDiet";
 import axios from "axios";
-import AutoList from "./AutoList";
+import AutoList from "./AutoList/AutoList";
 import Paper from "@material-ui/core/Paper";
 import InputBase from "@material-ui/core/InputBase";
 import IconButton from "@material-ui/core/IconButton";
