@@ -2,7 +2,7 @@
 
 ## Introduction
 
-Sigle page app made up with 5 components: Header, AutoList, UserPanel, DietTable, AddButton.  
+Sigle page Nutritionix Diet App made up with 5 components: Header, AutoList, UserPanel, DietTable, AddButton.  
 Commonly used states, including dateIndex and dietList, are created and maintained in redux store.
 
 ## How to start
