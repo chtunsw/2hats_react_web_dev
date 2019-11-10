@@ -1,16 +1,16 @@
 # Nutritionix Diet App
 
-## introduction
+## Introduction
 
 Sigle page app made up with 5 components: Header, AutoList, UserPanel, DietTable, AddButton.  
 Commonly used states, including dateIndex and dietList, are created and maintained in redux store.
 
-## make it run:
+## How to start
 
 npm install  
 npm start
 
-## screen shots:
+## Screen shots
 
 ![](./screenshots/tablet-table.png)
 ![](./screenshots/tablet-search.png)
