@@ -1,4 +1,4 @@
-# Nutritionix Diet Sample App
+# Nutritionix Diet App
 
 ## introduction
 
